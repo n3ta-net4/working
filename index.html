@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Calendar</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="calendar-container">
+        <h2>Book an Appointment</h2>
+        <form action="book_appointment.php" method="POST">
+            <label for="date">Select Date:</label>
+            <input type="date" name="date" required>
+            
+            <label for="time">Select Time:</label>
+            <select name="time" required>
+                <option value="09:00:00">9:00 AM</option>
+                <option value="10:00:00">10:00 AM</option>
+                <option value="11:00:00">11:00 AM</option>
+                <option value="12:00:00">12:00 PM</option>
+                <option value="13:00:00">1:00 PM</option>
+                <option value="14:00:00">2:00 PM</option>
+                <option value="15:00:00">3:00 PM</option>
+                <option value="16:00:00">4:00 PM</option>
+            </select>
+            
+            <button type="submit">Book Appointment</button>
+        </form>
+    </div>
+</body>
+</html>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.calendar-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+input[type="date"], select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+</style>
