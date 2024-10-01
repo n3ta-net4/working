@@ -30,7 +30,6 @@ $rejected_appointments = array_filter($appointments, function($appointment) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View My Appointments</title>
-    <link rel="stylesheet" href="styles.css">
     <style>
         .appointments-container {
             width: 80%;
@@ -75,7 +74,7 @@ $rejected_appointments = array_filter($appointments, function($appointment) {
         <?php if (count($approved_appointments) > 0): ?>
             <table>
                 <tr>
-                    <th>User</th>
+                    <th></th>
                     <th>Date</th>
                     <th>Time</th>
                 </tr>

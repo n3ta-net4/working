@@ -24,3 +24,5 @@ if ($stmt->rowCount() > 0) {
     echo json_encode(['available' => true]);
 }
 ?>
+
+IBALIK IF NOT WORKING PROGRAM
