@@ -92,7 +92,7 @@ $user = $_SESSION['user'];
         }
         h1 {
             margin-bottom: 20px;
-            color: #1976d2; /* Deep blue for headings */
+            color: #1976d2;
             font-size: 24px;
             font-weight: 700;
         }

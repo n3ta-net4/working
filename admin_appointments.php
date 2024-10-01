@@ -132,10 +132,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             cursor: pointer;
         }
         .approve {
-            background-color: #4caf50; /* Green for approve */
+            background-color: #4caf50; 
         }
         .reject {
-            background-color: #f44336; /* Red for reject */
+            background-color: #f44336; 
         }
         .approve:hover {
             background-color: #388e3c;

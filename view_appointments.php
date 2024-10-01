@@ -106,7 +106,7 @@ $rejected_appointments = array_filter($appointments, function($appointment) {
             overflow-y: auto;
         }
         h3 {
-            color: #1976d2; /* Deep blue for headings */
+            color: #1976d2; 
             margin: 15px 0;
             font-size: 22px;
         }
@@ -116,25 +116,25 @@ $rejected_appointments = array_filter($appointments, function($appointment) {
             margin: 10px 0;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s;
-            color: #fff; /* White text for better contrast */
+            color: #fff; 
             position: relative;
         }
         .approved {
-            background-color: #4caf50; /* Green for approved */
-            border: 1px solid #388e3c; /* Darker green border */
+            background-color: #4caf50; /
+            border: 1px solid #388e3c;
         }
         .rejected {
-            background-color: #f44336; /* Red for rejected */
-            border: 1px solid #c62828; /* Darker red border */
+            background-color: #f44336; 
+            border: 1px solid #c62828; 
         }
         .appointment-card:hover {
             transform: translateY(-2px);
-            opacity: 0.9; /* Slightly fade on hover */
+            opacity: 0.9; 
         }
         .appointment-details {
             margin: 5px 0;
-            font-size: 16px; /* Slightly larger font for clarity */
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Text shadow for better visibility */
+            font-size: 16px; 
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); 
         }
         @media (max-width: 600px) {
             .main-content {
