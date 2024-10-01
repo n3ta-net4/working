@@ -158,7 +158,9 @@ $notifications = [
 
 <div class="sidebar">
     <div class="logo">
-        <img src="aw-k9.png" alt="aw-k9 logo">
+        <a href="user_dashboard.php">
+            <img src="aw-k9.png" alt="aw-k9 logo">
+        </a>
     </div>
     <div class="user-details">
         <h2><?php echo htmlspecialchars($user['name']); ?></h2>
@@ -166,7 +168,7 @@ $notifications = [
     </div>
     <div class="divider"></div>
     <ul>
-        <li><a href="index.html">Booking</a></li>
+        <li><a href="index.php">Booking</a></li>
         <li><a href="view_appointments.php">View Appointments</a></li>
     </ul>
 </div>
@@ -198,7 +200,6 @@ $notifications = [
         dropdown.classList.toggle('show');
     }
 
-    
     document.addEventListener('click', function(event) {
         const dropdown = document.getElementById('notificationDropdown');
         const button = document.querySelector('.btn-notifications');

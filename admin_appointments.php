@@ -38,126 +38,170 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Admin Appointments</title>
     <style>
         * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
-}
-
-body {
-    background: linear-gradient(135deg, #6dd5ed, #2193b0);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    color: #333;
-}
-
-.auth-container, .dashboard-container {
-    background-color: #fff;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-}
-
-h2 {
-    margin-bottom: 20px;
-    color: #2c3e50;
-}
-
-input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 16px;
-}
-
-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #2980b9;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #3498db;
-}
-
-a {
-    color: #3498db;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-.error-message {
-    color: red;
-    margin-bottom: 20px;
-}
-
-h1 {
-    color: #2c3e50;
-    margin-bottom: 10px;
-}
-
-.btn-logout {
-    background-color: #e74c3c;
-    padding: 10px 20px;
-    border-radius: 5px;
-    color: #fff;
-    text-decoration: none;
-    display: inline-block;
-    margin-top: 20px;
-}
-
-.btn-logout:hover {
-    background-color: #c0392b;
-}
-
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica', Arial, sans-serif;
+        }
+        body {
+            display: flex;
+            height: 100vh;
+            background-color: #f5f7fa;
+        }
+        .sidebar {
+            width: 240px;
+            background-color: #2c3e50;
+            color: #fff;
+            padding: 20px;
+            position: fixed;
+            height: 100%;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar .logo {
+            text-align: center;
+            margin-bottom: 10px; 
+        }
+        .sidebar .logo img {
+            width: 200px; 
+            margin-bottom: 5px; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+        }
+        .sidebar h2 {
+            color: #ecf0f1;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding-top: 10px; 
+            flex-grow: 1; 
+        }
+        .sidebar ul li {
+            margin-bottom: 15px; 
+        }
+        .sidebar ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px; 
+            display: block;
+            border-radius: 6px;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .sidebar ul li a:hover {
+            background-color: #1abc9c;
+        }
+        .main-content {
+            margin-left: 240px;
+            padding: 30px;
+            width: calc(100% - 240px);
+            background-color: #fff;
+            overflow-y: auto;
+        }
+        h2 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        .confirmation-message {
+            color: green;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #2c3e50;
+            color: #fff;
+        }
+        button {
+            padding: 5px 10px;
+            margin: 0 5px;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+        }
+        .approve {
+            background-color: #4caf50; /* Green for approve */
+        }
+        .reject {
+            background-color: #f44336; /* Red for reject */
+        }
+        .approve:hover {
+            background-color: #388e3c;
+        }
+        .reject:hover {
+            background-color: #c62828;
+        }
+        hr {
+            border: 0;
+            height: 1px;
+            background: #fff; 
+            margin: 10px 0; 
+        }
+        @media (max-width: 600px) {
+            .main-content {
+                margin-left: 0;
+            }
+            .sidebar {
+                width: 100%;
+                position: relative;
+                height: auto;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="admin-container">
-        <h2>Manage Appointments</h2>
-        <?php if ($confirmation_message): ?>
-            <p class="confirmation-message"><?php echo htmlspecialchars($confirmation_message); ?></p>
-        <?php endif; ?>
-        <table>
-            <tr>
-                <th>User</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Action</th>
-            </tr>
-            <?php foreach ($appointments as $appointment): ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($appointment['name']); ?></td>
-                    <td><?php echo htmlspecialchars($appointment['appointment_date']); ?></td>
-                    <td><?php echo htmlspecialchars($appointment['appointment_time']); ?></td>
-                    <td>
-                        <form action="admin_appointments.php" method="POST">
-                            <input type="hidden" name="appointment_id" value="<?php echo $appointment['id']; ?>">
-                            <button type="submit" name="action" value="approve">Approve</button>
-                            <button type="submit" name="action" value="reject">Reject</button>
-                        </form>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </table>
-        <form action="admin_dashboard.php" method="get">
-            <button type="submit">Back to Admin Dashboard</button>
-        </form>
+<div class="sidebar">
+    <div class="logo">
+        <a href="admin_dashboard.php">
+            <img src="aw-k9.png" alt="aw-k9 logo">
+        </a>
     </div>
+    <h2>Admin Dashboard</h2>
+    <hr> 
+    <ul>
+        <li><a href="admin_appointments.php">Manage Appointments</a></li>
+    </ul>
+</div>
+
+<div class="main-content">
+    <h2>Manage Appointments</h2>
+    <?php if ($confirmation_message): ?>
+        <p class="confirmation-message"><?php echo htmlspecialchars($confirmation_message); ?></p>
+    <?php endif; ?>
+    <table>
+        <tr>
+            <th>User</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Action</th>
+        </tr>
+        <?php foreach ($appointments as $appointment): ?>
+            <tr>
+                <td><?php echo htmlspecialchars($appointment['name']); ?></td>
+                <td><?php echo htmlspecialchars($appointment['appointment_date']); ?></td>
+                <td><?php echo htmlspecialchars($appointment['appointment_time']); ?></td>
+                <td>
+                    <form action="admin_appointments.php" method="POST" style="display: inline;">
+                        <input type="hidden" name="appointment_id" value="<?php echo $appointment['id']; ?>">
+                        <button type="submit" name="action" value="approve" class="approve">Approve</button>
+                        <button type="submit" name="action" value="reject" class="reject">Reject</button>
+                    </form>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+</div>
 </body>
 </html>
