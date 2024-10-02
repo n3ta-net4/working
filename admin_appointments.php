@@ -11,8 +11,6 @@ $stmt = $pdo->prepare("SELECT appointments.*, users.name FROM appointments JOIN 
 $stmt->execute();
 $appointments = $stmt->fetchAll();
 
-$confirmation_message = '';
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $appointment_id = $_POST['appointment_id'];
     $action = $_POST['action'];
@@ -25,8 +23,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $confirmation_message = 'The appointment has been rejected.';
     }
 
-    $stmt = $pdo->prepare($query);
-    $stmt->execute([$appointment_id]);
+    if (isset($query)) {
+        $stmt = $pdo->prepare($query);
+        $stmt->execute([$appointment_id]);
+        echo json_encode(['status' => 'success', 'message' => $confirmation_message]);
+        exit();
+    }
 }
 ?>
 
@@ -105,10 +107,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             margin-bottom: 20px;
             color: #2c3e50;
         }
-        .confirmation-message {
-            color: green;
-            margin-bottom: 20px;
-        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -160,6 +158,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     </style>
+    <script>
+        function handleSubmit(button, action) {
+            const form = button.closest('form');
+            const appointmentId = form.querySelector('input[name="appointment_id"]').value;
+            const row = button.closest('tr');
+
+            
+            const formData = new FormData();
+            formData.append('appointment_id', appointmentId);
+            formData.append('action', action);
+
+          
+            fetch('admin_appointments.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    row.style.display = 'none';  
+                    alert(data.message);  
+                } else {
+                    alert('Error processing request');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error processing request');
+            });
+
+            return false;  
+        }
+    </script>
 </head>
 <body>
 <div class="sidebar">
@@ -177,9 +208,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="main-content">
     <h2>Manage Appointments</h2>
-    <?php if ($confirmation_message): ?>
-        <p class="confirmation-message"><?php echo htmlspecialchars($confirmation_message); ?></p>
-    <?php endif; ?>
     <table>
         <tr>
             <th>User</th>
@@ -193,10 +221,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <td><?php echo htmlspecialchars($appointment['appointment_date']); ?></td>
                 <td><?php echo htmlspecialchars($appointment['appointment_time']); ?></td>
                 <td>
-                    <form action="admin_appointments.php" method="POST" style="display: inline;">
+                    <form onsubmit="return false;">
                         <input type="hidden" name="appointment_id" value="<?php echo $appointment['id']; ?>">
-                        <button type="submit" name="action" value="approve" class="approve">Approve</button>
-                        <button type="submit" name="action" value="reject" class="reject">Reject</button>
+                        <button type="button" onclick="handleSubmit(this, 'approve')" class="approve">Approve</button>
+                        <button type="button" onclick="handleSubmit(this, 'reject')" class="reject">Reject</button>
                     </form>
                 </td>
             </tr>
