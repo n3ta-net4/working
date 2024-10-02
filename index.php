@@ -145,6 +145,12 @@ $user = $_SESSION['user'];
             background-color: #218838; 
             transform: translateY(-2px);
         }
+        .time-slot button.pending {
+            background-color: #FFA500; 
+            color: white; 
+            cursor: not-allowed; 
+            pointer-events: none;
+}
         .confirmation-message {
             margin-top: 20px;
             font-size: 16px;
